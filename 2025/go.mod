@@ -1,0 +1,3 @@
+module github.com/henbagle/advent-of-code
+
+go 1.24.8
