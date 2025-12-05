@@ -17,31 +17,29 @@ func main() {
 	fmt.Println("Part 1:", sumInvalid(ranges, sameSequenceTwice), "Part 2:", sumInvalid(ranges, anySequenceRepeated))
 }
 
-func sumInvalid(ranges []string, validFunc func(int) bool) int {
+func sumInvalid(ranges []string, invalidFunc func(int) bool) int {
 	var sum int
-	for _, rng := range ranges {
-		bounds := strings.Split(rng, "-")
+	for _, r := range ranges {
+		bounds := strings.Split(r, "-")
 		start, err := strconv.Atoi(bounds[0])
 		if err != nil {
 			panic(err)
 		}
-		var end int
-		end, err = strconv.Atoi(bounds[1])
+		end, err := strconv.Atoi(bounds[1])
 		if err != nil {
 			panic(err)
 		}
 
 		for i := start; i <= end; i++ {
-			if validFunc(i) {
+			if invalidFunc(i) {
 				sum += i
 			}
 		}
 	}
-
 	return sum
 }
 
-// part 2
+// part 1
 func sameSequenceTwice(id int) bool {
 	str := strconv.Itoa(id)
 	if len(str)%2 == 1 {
@@ -56,7 +54,7 @@ func sameSequenceTwice(id int) bool {
 func anySequenceRepeated(id int) bool {
 	str := strconv.Itoa(id)
 	for i := 2; i <= len(str); i++ {
-		if len(str)%i > 0 {
+		if len(str)%i > 0 { // skip if not evenly divisible by string length
 			continue
 		}
 		sequence := str[:len(str)/i]

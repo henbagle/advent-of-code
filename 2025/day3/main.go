@@ -30,10 +30,10 @@ func maxJolt(batteries string, n int) int {
 
 	var start = 0
 	for i := 0; i < n; i++ {
-		end := len(batteries) - (n - i - 1) // eg: if n is 12, we need to leave room for 11 characters
+		end := len(batteries) - (n - i - 1) // eg: if n is 12, must leave room for 11 characters
 
 		maxRune, subIdx := firstMaxRune(batteries[start:end])
-		start += subIdx + 1
+		start += subIdx + 1 // look after this maximum char from now on
 
 		joltString = append(joltString, maxRune)
 	}

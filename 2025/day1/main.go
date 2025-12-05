@@ -1,21 +1,18 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
-	"io"
-	"os"
 	"strconv"
 	"strings"
 )
 
-func main() {
-	data, err := io.ReadAll(os.Stdin)
-	if err != nil {
-		panic(err)
-	}
+//go:embed input.txt
+var input string
 
-	input := strings.TrimSpace(string(data))
-	lines := strings.Split(input, "\n")
+func main() {
+	inputTrimmed := strings.TrimSpace(input)
+	lines := strings.Split(inputTrimmed, "\n")
 
 	fmt.Println("Part 1:", part1(lines), "Part 2:", part2(lines))
 }
@@ -35,17 +32,17 @@ func part1(cmds []string) int {
 
 func part2(cmds []string) int {
 	dial := 50
-	var zeroes int
 	var allZeroes int
 
 	for _, cmd := range cmds {
+		var zeroes int
 		dial, zeroes = rot(dial, cmd)
 		allZeroes += zeroes
 	}
 	return allZeroes
 }
 
-func rot(in int, cmd string) (int, int) {
+func rot(startPos int, cmd string) (outPos int, zeroCount int) {
 	amount, err := strconv.Atoi(cmd[1:])
 	if err != nil {
 		panic(err)
@@ -55,9 +52,9 @@ func rot(in int, cmd string) (int, int) {
 	dir := cmd[:1]
 	switch dir {
 	case "R":
-		out = in + amount%100
+		out = startPos + amount%100
 	case "L":
-		out = in - amount%100
+		out = startPos - amount%100
 	default:
 		panic(fmt.Sprintf("unknown direction '%s'", dir))
 	}
@@ -65,7 +62,7 @@ func rot(in int, cmd string) (int, int) {
 	zeroes := amount / 100 // number of times we passed zero spinning
 	if out < 0 {
 		out += 100
-		if in > 0 {
+		if startPos > 0 {
 			zeroes++
 		}
 	}
