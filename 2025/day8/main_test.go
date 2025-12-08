@@ -32,9 +32,24 @@ func TestPart1(t *testing.T) {
 	inputTrimmed := strings.TrimSpace(testInput)
 	lines := strings.Split(inputTrimmed, "\n")
 	coords := parseCoords(lines)
-	result := part1(coords, 10)
+	distances := calculateDistances(coords)
+	result := part1(distances, 10)
 
 	if result != expected {
 		t.Errorf("part1() returned %d, expected %d", result, expected)
+	}
+}
+
+func TestPart2(t *testing.T) {
+	expected := 25272
+
+	inputTrimmed := strings.TrimSpace(testInput)
+	lines := strings.Split(inputTrimmed, "\n")
+	coords := parseCoords(lines)
+	distances := calculateDistances(coords)
+	result := part2(distances, coords)
+
+	if result != expected {
+		t.Errorf("part2() returned %d, expected %d", result, expected)
 	}
 }
