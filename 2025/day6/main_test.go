@@ -20,7 +20,7 @@ func TestCleanupLine(t *testing.T) {
 	for _, tt := range tests {
 		out := cleanupLine(tt.line)
 		if out != tt.expected {
-			t.Errorf("MaxJolt(%s) = %s, expected %s", tt.line, out, tt.expected)
+			t.Errorf("cleanupLine(%s) = %s, expected %s", tt.line, out, tt.expected)
 		}
 	}
 }
